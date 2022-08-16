@@ -34,26 +34,26 @@
           <div class="sm:flex sm:items-start">
             <div class="w-full mt-3 text-center sm:mt-0 sm:mx-4 sm:text-left dark:text-white">
               <h3 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
-                Simple Sveltekit Template
+                Spinner using Sveltekit
               </h3>
               <div class="mt-2">
-                <p class="text-sm text-gray-500 dark:text-gray-300">
-                  Build a web app with Sveltekit, quickly.
-                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-300">Free Spinner using Sveltekit</p>
               </div>
               <hr class="my-2" />
               <div class="mt-2">
                 <h3 class="text-base font-medium underline">Changelog</h3>
-                <h4 class="text-sm font-medium text-left mt-2">v1.1.0</h4>
+                <h4 class="text-sm font-medium text-left mt-2">v0.1.0</h4>
                 <div class="flex flex-col mt-1 w-full justify-between text-left">
-                  <p class="text-sm text-gray-500 dark:text-white">Improve Code Redundancy</p>
+                  <p class="text-sm text-gray-500 dark:text-white">
+                    Not functional! Just update info!
+                  </p>
                   <div class="text-sm text-gray-500 dark:text-white">
                     <ul class="list-disc pl-4">
-                      <li>Update Handle Modal Function</li>
+                      <li>Update General Information</li>
                     </ul>
                   </div>
                 </div>
-                <h4 class="text-sm font-medium text-left mt-2">v1.0.0</h4>
+                <!-- <h4 class="text-sm font-medium text-left mt-2">v1.0.0</h4>
                 <div class="flex flex-col mt-1 w-full justify-between text-left">
                   <p class="text-sm text-gray-500 dark:text-white">Initial Released ✌🏻</p>
                   <div class="text-sm text-gray-500 dark:text-white">
@@ -63,7 +63,7 @@
                       <li>Modal Supported</li>
                     </ul>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
