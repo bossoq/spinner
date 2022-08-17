@@ -12,18 +12,24 @@
   $: textRotate = 90 - 180 / segments.length
 </script>
 
-<div class="w-[36rem] aspect-square flex flex-row my-8 justify-center">
-  {#each segments as segment, idx}
-    <div
-      class="w-[36rem] aspect-square {colors[idx % 4]} rounded-full absolute"
-      style="clip-path: {clipPath}; transform: rotate({(360 / segments.length) * idx}deg)"
-    >
-      <span
-        class="text-white text-4xl absolute"
-        style="transform: rotate(-{textRotate}deg); left: {transX}%; top: {transY}%;"
+<div class="w-[36rem] aspect-square flex flex-col my-8 justify-center items-center">
+  <div class="w-[8rem] aspect-square bg-white rounded-full z-50 absolute" />
+  <div
+    class="w-0 h-0 border-t-[2rem] border-t-transparent border-r-[4rem] border-r-slate-300 border-b-[2rem] border-b-transparent z-50 ml-auto self-end absolute translate-x-8"
+  />
+  <div class="animate-spin w-[36rem] aspect-square absolute">
+    {#each segments as segment, idx}
+      <div
+        class="w-[36rem] aspect-square {colors[idx % 4]} rounded-full absolute"
+        style="clip-path: {clipPath}; transform: rotate({(360 / segments.length) * idx}deg)"
       >
-        <span class="w-full h-full flex justify-end items-center">{segment}</span>
-      </span>
-    </div>
-  {/each}
+        <span
+          class="text-white text-4xl absolute"
+          style="transform: rotate(-{textRotate}deg); left: {transX}%; top: {transY}%;"
+        >
+          <span class="w-full h-full flex justify-end items-center">{segment}</span>
+        </span>
+      </div>
+    {/each}
+  </div>
 </div>
