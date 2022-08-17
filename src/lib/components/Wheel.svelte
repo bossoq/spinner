@@ -6,7 +6,9 @@
   $: clipPath =
     segments.length > 3
       ? `polygon(50% 50%, 50% 0%, 100% 0%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
-      : `polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
+      : segments.length > 1
+      ? `polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
+      : `polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
   $: transX = ((Math.sin((1 / segments.length) * Math.PI) / 2) * 0.9 + 0.5) * 100 - 2 // scale text to 90% of the wheel - offset 2%
   $: transY = (0.5 - (Math.cos((1 / segments.length) * Math.PI) / 2) * 0.9) * 100 // scale text to 90% of the wheel
   $: textRotate = 90 - 180 / segments.length
