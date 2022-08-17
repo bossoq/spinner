@@ -27,6 +27,10 @@
     if (titleInterval) clearInterval(titleInterval)
   }
 
+  const onFinished = (segment: string) => {
+    console.log('winner is ', segment)
+  }
+
   onMount(() => {
     handleTitleChange()
   })
@@ -43,5 +47,5 @@
       <span class={headClass[i % 2]}>{h}</span>
     {/each}
   </h1>
-  <Wheel />
+  <Wheel {onFinished} />
 </div>
