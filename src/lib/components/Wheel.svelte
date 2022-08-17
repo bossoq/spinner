@@ -9,8 +9,6 @@
       : segments.length > 1
       ? `polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
       : `polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
-  $: transX = ((Math.sin((1 / segments.length) * Math.PI) / 2) * 0.9 + 0.5) * 100 - 2 // scale text to 90% of the wheel - offset 2%
-  $: transY = (0.5 - (Math.cos((1 / segments.length) * Math.PI) / 2) * 0.9) * 100 // scale text to 90% of the wheel
   $: textRotate = 90 - 180 / segments.length
 </script>
 
@@ -26,8 +24,8 @@
         style="clip-path: {clipPath}; transform: rotate({(360 / segments.length) * idx}deg)"
       >
         <span
-          class="text-white text-4xl absolute"
-          style="transform: rotate(-{textRotate}deg); left: {transX}%; top: {transY}%;"
+          class="w-[36rem] pr-6 aspect-square text-white text-4xl absolute overflow-hidden"
+          style="transform: rotate(-{textRotate}deg);"
         >
           <span class="w-full h-full flex justify-end items-center">{segment}</span>
         </span>
