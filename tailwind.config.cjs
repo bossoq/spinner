@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       animation: {
         fadeIn: 'fadeIn 0.4s ease-in-out',
-        fadeOut: 'fadeOut 0.4s ease-in-out'
+        fadeOut: 'fadeOut 0.4s ease-in-out',
+        'spin-slow': 'spin 5s linear infinite'
       },
       keyframes: {
         fadeIn: {

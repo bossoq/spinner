@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition'
   export let onFinished: (winner: string) => void
   let timerHandle: NodeJS.Timer | null = null
   let spinStart = 0
   let angleCurrent = 0
   let angleDelta = 0
+  $: isStart = false
   $: isFinished = false
   $: maxSpeed = 45 / segments.length
   $: timerDelay = segments.length
@@ -11,7 +13,8 @@
   $: downTime = segments.length * 1000
   $: currentSegment = ''
 
-  $: segments = ['David', 'John', 'Paul', 'George', 'Ringo', 'Mick']
+  const defaultSegments = ['David', 'John', 'Paul', 'George', 'Ringo', 'Mick']
+  $: segments = defaultSegments
 
   const colors = ['bg-red-300', 'bg-sky-300', 'bg-teal-300', 'bg-amber-300']
 
@@ -27,6 +30,7 @@
 
   const spin = () => {
     if (timerHandle) return
+    isStart = true
     isFinished = false
     spinStart = new Date().getTime()
     maxSpeed = 45 / segments.length
@@ -56,19 +60,32 @@
       angleDelta = 0
     }
   }
+  const handleClose = () => {
+    isStart = false
+    isFinished = false
+    if (timerHandle) {
+      clearInterval(timerHandle)
+      timerHandle = null
+    }
+  }
+  const handleRemove = () => {
+    segments = segments.filter((_, index) => index !== segments.indexOf(currentSegment))
+    if (segments.length === 0) segments = defaultSegments
+    handleClose()
+  }
 </script>
 
-<div class="w-[36rem] aspect-square flex flex-col my-8 justify-center items-center">
+<div class="w-[36rem] aspect-square flex flex-col my-8 pb-10 justify-center items-center">
   <div
-    class="w-[8rem] aspect-square bg-white rounded-full z-10 absolute cursor-pointer"
+    class="w-[8rem] aspect-square bg-white hover:bg-gray-100 rounded-full z-10 absolute cursor-pointer select-none"
     on:click={spin}
   >
     <div class="text-center text-4xl font-bold relative top-1/3">SPIN</div>
   </div>
   <div
-    class="w-0 h-0 border-t-[2rem] border-t-transparent border-r-[4rem] border-r-slate-300 border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-8"
+    class="w-0 h-0 border-t-[2rem] border-t-transparent border-r-[4rem] border-r-white border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-8"
   />
-  <div class="w-[36rem] aspect-square absolute">
+  <div class="{!isStart && 'animate-spin-slow'} w-[36rem] aspect-square absolute overflow-hidden">
     {#each segments as segment, idx}
       <div
         class="w-[36rem] aspect-square {colors[idx % 4]} rounded-full absolute"
@@ -79,12 +96,26 @@
           class="w-[36rem] pr-6 aspect-square text-white text-4xl absolute overflow-hidden"
           style="transform: rotate(-{textRotate}deg);"
         >
-          <span class="w-full h-full flex justify-end items-center">{segment}</span>
+          <span class="w-full h-full flex justify-end items-center select-none">{segment}</span>
         </span>
       </div>
     {/each}
   </div>
-</div>
-<div class="text-6xl text-white font-medium p-4">
-  The winner is {isFinished ? currentSegment : '...'}
+  {#if isFinished}
+    <div class="w-1/3 min-w-fit p-4 z-20 bg-slate-800 absolute rounded-2xl" transition:fade>
+      <p class="text-4xl text-white font-bold py-4 text-center">
+        The winner is {currentSegment}
+      </p>
+      <p class="flex flex-row gap-4 justify-center py-4">
+        <button
+          class="w-fit p-4 mt-4 bg-cyan-500 hover:bg-cyan-700 text-xl text-white font-bold py-2 px-4 rounded-full"
+          on:click={handleClose}>Close</button
+        >
+        <button
+          class="w-fit p-4 mt-4 bg-red-500 hover:bg-red-700 text-xl text-white font-bold py-2 px-4 rounded-full"
+          on:click={handleRemove}>Remove</button
+        >
+      </p>
+    </div>
+  {/if}
 </div>
