@@ -17,8 +17,16 @@ const storeSettings = () => {
 
 export const darkTheme: Writable<boolean> = writable(storage.darkTheme ?? false)
 export const modalViewed: Writable<boolean> = writable(false)
+export const wheelModalViewed: Writable<boolean> = writable(false)
+export const entries: Writable<string[]> = writable(
+  storage.entries ?? ['David', 'John', 'Paul', 'George', 'Ringo', 'Mick']
+)
 
 darkTheme.subscribe((value) => {
   storage.darkTheme = value
+  storeSettings()
+})
+entries.subscribe((value) => {
+  storage.entries = value
   storeSettings()
 })

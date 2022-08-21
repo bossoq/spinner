@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import { entries } from '$lib/store'
   export let onFinished: (winner: string) => void
   let timerHandle: NodeJS.Timer | null = null
   let spinStart = 0
@@ -7,33 +8,30 @@
   let angleDelta = 0
   $: isStart = false
   $: isFinished = false
-  $: maxSpeed = 45 / segments.length
-  $: timerDelay = segments.length
-  $: upTime = segments.length * 100
-  $: downTime = segments.length * 1000
+  $: maxSpeed = 45 / $entries.length
+  $: timerDelay = $entries.length
+  $: upTime = $entries.length * 100
+  $: downTime = $entries.length * 1000
   $: currentSegment = ''
-
-  const defaultSegments = ['David', 'John', 'Paul', 'George', 'Ringo', 'Mick']
-  $: segments = defaultSegments
 
   const colors = ['bg-red-300', 'bg-sky-300', 'bg-teal-300', 'bg-amber-300']
 
-  $: coordinateX = (Math.sin((2 / segments.length) * Math.PI) / 2 + 0.5) * 100 // sin(deg) / 2 + 0.5
-  $: coordinateY = (0.5 - Math.cos((2 / segments.length) * Math.PI) / 2) * 100 // 0.5 - cos(deg) / 2
+  $: coordinateX = (Math.sin((2 / $entries.length) * Math.PI) / 2 + 0.5) * 100 // sin(deg) / 2 + 0.5
+  $: coordinateY = (0.5 - Math.cos((2 / $entries.length) * Math.PI) / 2) * 100 // 0.5 - cos(deg) / 2
   $: clipPath =
-    segments.length > 3
+    $entries.length > 3
       ? `polygon(50% 50%, 50% 0%, 100% 0%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
-      : segments.length > 1
+      : $entries.length > 1
       ? `polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
       : `polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, ${coordinateX}% ${coordinateY}%, 50% 50%)`
-  $: textRotate = 90 - 180 / segments.length
+  $: textRotate = 90 - 180 / $entries.length
 
   const spin = () => {
     if (timerHandle) return
     isStart = true
     isFinished = false
     spinStart = new Date().getTime()
-    maxSpeed = 45 / segments.length
+    maxSpeed = 45 / $entries.length
     timerHandle = setInterval(onTimerTick, timerDelay)
   }
   const onTimerTick = () => {
@@ -53,7 +51,7 @@
     while (angleCurrent >= 360) angleCurrent -= 360
     if (finished) {
       isFinished = true
-      currentSegment = segments[Math.floor(((450 - angleCurrent) % 360) / (360 / segments.length))]
+      currentSegment = $entries[Math.floor(((450 - angleCurrent) % 360) / (360 / $entries.length))]
       onFinished(currentSegment)
       clearInterval(timerHandle)
       timerHandle = null
@@ -69,8 +67,7 @@
     }
   }
   const handleRemove = () => {
-    segments = segments.filter((_, index) => index !== segments.indexOf(currentSegment))
-    if (segments.length === 0) segments = defaultSegments
+    entries.set($entries.filter((_, index) => index !== $entries.indexOf(currentSegment)))
     handleClose()
   }
 </script>
@@ -86,10 +83,10 @@
     class="w-0 h-0 border-t-[2rem] border-t-transparent border-r-[4rem] border-r-white border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-8"
   />
   <div class="{!isStart && 'animate-spin-slow'} w-[36rem] aspect-square absolute overflow-hidden">
-    {#each segments as segment, idx}
+    {#each $entries as segment, idx}
       <div
         class="w-[36rem] aspect-square {colors[idx % 4]} rounded-full absolute"
-        style="clip-path: {clipPath}; transform: rotate({(360 / segments.length) * idx +
+        style="clip-path: {clipPath}; transform: rotate({(360 / $entries.length) * idx +
           angleCurrent}deg)"
       >
         <span

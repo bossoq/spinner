@@ -6,7 +6,9 @@
   import Social from '$lib/components/Social.svelte'
   import ThemeSelector from '$lib/components/ThemeSelector.svelte'
   import Modal from '$lib/components/Modal.svelte'
-  import { darkTheme, modalViewed } from '$lib/store'
+  import { darkTheme, modalViewed, wheelModalViewed } from '$lib/store'
+  import WheelOptionsButton from '$lib/components/WheelOptionsButton.svelte'
+  import WheelOptionsModal from '$lib/components/WheelOptionsModal.svelte'
 
   const url = 'https://spinner.bossoq.live'
   const title = 'Spinner using Sveltekit'
@@ -23,9 +25,13 @@
 <Social {url} {title} />
 <main class={$darkTheme && 'dark'}>
   <ThemeSelector {themeIcons} />
+  <WheelOptionsButton />
   <Menu items={menuItems} />
   {#if $modalViewed}
     <Modal />
+  {/if}
+  {#if $wheelModalViewed}
+    <WheelOptionsModal />
   {/if}
   <slot />
 </main>
