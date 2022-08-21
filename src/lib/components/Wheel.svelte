@@ -1,7 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { entries } from '$lib/store'
-  export let onFinished: (winner: string) => void
+  import { entries, winnerEntries } from '$lib/store'
   let timerHandle: NodeJS.Timer | null = null
   let spinStart = 0
   let angleCurrent = 0
@@ -52,7 +51,7 @@
     if (finished) {
       isFinished = true
       currentSegment = $entries[Math.floor(((450 - angleCurrent) % 360) / (360 / $entries.length))]
-      onFinished(currentSegment)
+      winnerEntries.set([currentSegment, ...$winnerEntries])
       clearInterval(timerHandle)
       timerHandle = null
       angleDelta = 0

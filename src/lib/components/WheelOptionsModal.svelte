@@ -1,10 +1,11 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { wheelModalViewed, entries } from '$lib/store'
+  import { wheelModalViewed, entries, winnerEntries } from '$lib/store'
   import { clickOutside } from '$lib/clickOutside'
   import { handleWheelModalClass } from '$lib/handleModal'
 
   let rawEntries = $entries.join('\n')
+  let currentMenu = 'entries'
   const baseMenuClass = 'cursor-pointer inline-block p-2 rounded-t-lg '
   const activeMenuClass =
     baseMenuClass + 'active text-white bg-teal-800 dark:bg-teal-200 dark:text-black'
@@ -14,10 +15,17 @@
   const handleEntries = () => {
     entries.set(rawEntries.split('\n').filter((e) => e.length > 0))
   }
+  const handleMenuChange = (
+    e: MouseEvent & {
+      currentTarget: EventTarget & HTMLParagraphElement
+    }
+  ) => {
+    currentMenu = e.currentTarget.id
+  }
 </script>
 
 <div
-  class="fixed z-20 inset-0 overflow-y-auto"
+  class="fixed z-50 inset-0 overflow-y-auto"
   aria-labelledby="modal-title"
   role="dialog"
   aria-modal="true"
@@ -47,22 +55,49 @@
               class="flex flex-wrap text-base font-medium text-center text-gray-900 dark:text-white"
             >
               <li class="mr-1">
-                <p aria-current="page" class={activeMenuClass}>Entries</p>
+                <p
+                  id="entries"
+                  aria-current="page"
+                  class={currentMenu === 'entries' ? activeMenuClass : inactiveMenuClass}
+                  on:click={handleMenuChange}
+                >
+                  Entries
+                </p>
               </li>
               <li class="mr-1">
-                <p aria-current="page" class={inactiveMenuClass}>Results</p>
+                <p
+                  id="results"
+                  aria-current="page"
+                  class={currentMenu === 'results' ? activeMenuClass : inactiveMenuClass}
+                  on:click={handleMenuChange}
+                >
+                  Results
+                </p>
               </li>
             </ul>
             <hr />
             <div class="mt-2">
-              <textarea
-                cols="30"
-                rows="10"
-                class="w-full"
-                placeholder="Enter your entries here"
-                bind:value={rawEntries}
-                on:input={handleEntries}
-              />
+              {#if currentMenu === 'entries'}
+                <textarea
+                  cols="30"
+                  rows="10"
+                  class="w-full border-2 border-gray-200 dark:border-gray-800 dark:bg-black dark:text-white rounded-lg p-2"
+                  placeholder="Enter your entries here"
+                  bind:value={rawEntries}
+                  on:input={handleEntries}
+                />
+              {/if}
+              {#if currentMenu === 'results'}
+                <textarea
+                  cols="30"
+                  rows="10"
+                  class="w-full border-2 disabled:bg-white disabled:dark:bg-black disabled:dark:text-white border-gray-200 dark:border-gray-800 rounded-lg p-2"
+                  placeholder="Winner history shows here"
+                  value={$winnerEntries.join('\n')}
+                  on:input={handleEntries}
+                  disabled
+                />
+              {/if}
             </div>
           </div>
         </div>

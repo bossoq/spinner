@@ -21,6 +21,7 @@ export const wheelModalViewed: Writable<boolean> = writable(false)
 export const entries: Writable<string[]> = writable(
   storage.entries ?? ['David', 'John', 'Paul', 'George', 'Ringo', 'Mick']
 )
+export const winnerEntries: Writable<string[]> = writable([])
 
 darkTheme.subscribe((value) => {
   storage.darkTheme = value
