@@ -16,7 +16,7 @@
 
   const menuItems = [{ name: 'Made by bossoq', url: 'https://github.com/bossoq/spinner' }]
   const imageUrl = `${url}/screenshot.jpg`
-  const gtagId = null
+  const gtagId = 'G-78YE5B8PTT'
   const themeIcons = ['🌞 Toggle Light mode', '🌙 Toggle Dark mode']
 </script>
 
