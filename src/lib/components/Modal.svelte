@@ -44,6 +44,17 @@
                 <h3 class="text-base font-medium underline">Changelog</h3>
                 <h4 class="text-sm font-medium text-left mt-2">v0.2.0</h4>
                 <div class="flex flex-col mt-1 w-full justify-between text-left">
+                  <p class="text-sm text-gray-500 dark:text-white">Basic functionality 💪🏻</p>
+                  <div class="text-sm text-gray-500 dark:text-white">
+                    <ul class="list-disc pl-4">
+                      <li>Add options modal for entries & winner history</li>
+                      <li>Save entries to localStorage</li>
+                      <li>Show winner in modal instead of simple text</li>
+                    </ul>
+                  </div>
+                </div>
+                <h4 class="text-sm font-medium text-left mt-2">v0.2.0</h4>
+                <div class="flex flex-col mt-1 w-full justify-between text-left">
                   <p class="text-sm text-gray-500 dark:text-white">We have wheel now 🤟🏻</p>
                   <div class="text-sm text-gray-500 dark:text-white">
                     <ul class="list-disc pl-4">
@@ -64,17 +75,6 @@
                     </ul>
                   </div>
                 </div>
-                <!-- <h4 class="text-sm font-medium text-left mt-2">v1.0.0</h4>
-                <div class="flex flex-col mt-1 w-full justify-between text-left">
-                  <p class="text-sm text-gray-500 dark:text-white">Initial Released ✌🏻</p>
-                  <div class="text-sm text-gray-500 dark:text-white">
-                    <ul class="list-disc pl-4">
-                      <li>Responsive</li>
-                      <li>Toggleable Dark Mode</li>
-                      <li>Modal Supported</li>
-                    </ul>
-                  </div>
-                </div> -->
               </div>
             </div>
           </div>
