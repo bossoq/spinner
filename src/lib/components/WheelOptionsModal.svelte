@@ -22,6 +22,9 @@
   ) => {
     currentMenu = e.currentTarget.id
   }
+  const handleClearWinner = () => {
+    winnerEntries.set([])
+  }
 </script>
 
 <div
@@ -90,13 +93,17 @@
               {#if currentMenu === 'results'}
                 <textarea
                   cols="30"
-                  rows="10"
+                  rows="8"
                   class="w-full border-2 disabled:bg-white disabled:dark:bg-black disabled:dark:text-white border-gray-200 dark:border-gray-800 rounded-lg p-2"
                   placeholder="Winner history shows here"
                   value={$winnerEntries.join('\n')}
                   on:input={handleEntries}
                   disabled
                 />
+                <button
+                  class="w-fit p-2 bg-red-500 hover:bg-red-700 text-base text-white font-medium py-2 px-4 rounded-full"
+                  on:click={handleClearWinner}>Clear the list</button
+                >
               {/if}
             </div>
           </div>
