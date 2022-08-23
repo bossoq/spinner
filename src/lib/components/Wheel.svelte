@@ -7,10 +7,10 @@
   let angleDelta = 0
   $: isStart = false
   $: isFinished = false
-  $: maxSpeed = 45 / $entries.length
+  $: maxSpeed = $entries.length / 2
   $: timerDelay = $entries.length
-  $: upTime = $entries.length * 100
-  $: downTime = $entries.length * 1000
+  $: upTime = Math.min($entries.length * 100, 10 * 100)
+  $: downTime = Math.min($entries.length * 1000, 10 * 1000)
   $: currentSegment = ''
 
   const colors = [
@@ -35,7 +35,6 @@
     isStart = true
     isFinished = false
     spinStart = new Date().getTime()
-    maxSpeed = 45 / $entries.length
     timerHandle = setInterval(onTimerTick, timerDelay)
   }
   const onTimerTick = () => {
