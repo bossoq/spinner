@@ -101,7 +101,7 @@
                   disabled
                 />
                 <button
-                  class="w-fit p-2 bg-red-500 hover:bg-red-700 text-base text-white font-medium py-2 px-4 rounded-full"
+                  class="w-fit bg-red-500 hover:bg-red-700 text-sm sm:text-base text-white font-medium py-2 px-4 rounded-full"
                   on:click={handleClearWinner}>Clear the list</button
                 >
               {/if}
