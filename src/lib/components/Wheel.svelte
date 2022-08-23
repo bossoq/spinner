@@ -94,6 +94,7 @@
   <div
     class="{!isStart &&
       'animate-spin-slow'} w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] aspect-square absolute overflow-hidden cursor-pointer"
+    style="transform: rotate({angleCurrent}deg);"
     on:click={spin}
   >
     {#each $entries as segment, idx}
@@ -101,8 +102,7 @@
         class="w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] aspect-square {colors[
           idx % 4
         ]} rounded-full absolute"
-        style="clip-path: {clipPath}; transform: rotate({(360 / $entries.length) * idx +
-          angleCurrent}deg)"
+        style="clip-path: {clipPath}; transform: rotate({(360 / $entries.length) * idx}deg);"
       >
         <span
           class="w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] pr-6 aspect-square text-white text-lg lg:text-xl xl:text-2xl 2xl:text-4xl absolute overflow-hidden"
