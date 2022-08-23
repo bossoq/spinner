@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="flex flex-row text-xs sm:text-base text-right fixed top-2 sm:top-auto sm:bottom-4 right-0 p-2 z-10 text-emerald-800 dark:text-emerald-200"
+  class="flex flex-row text-xs sm:text-base text-right fixed top-auto bottom-4 right-0 p-2 z-10 text-emerald-800 dark:text-emerald-200"
 >
   {#each items as { name, url }}
     <a href={url} class="select-none p-2 mr-2" target="_blank" rel="noreferrer">{name}</a>
