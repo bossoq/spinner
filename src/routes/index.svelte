@@ -37,7 +37,7 @@
 
 <div class="w-full h-screen flex flex-col justify-center items-center bg-white dark:bg-black">
   <h1
-    class="text-xl sm:text-4xl text-white bg-teal-800 dark:text-black dark:bg-teal-200 p-2 sm:p-4 rounded-2xl font-bold select-none flex flex-row gap-1 sm:gap-2 lg:gap-5"
+    class="text-xl sm:text-3xl lg:text-4xl text-white bg-teal-800 dark:text-black dark:bg-teal-200 p-1 sm:p-2 lg:p-4 rounded-2xl font-bold select-none flex flex-row gap-1 sm:gap-2 lg:gap-5"
   >
     {#each head as h, i}
       <span class={headClass[i % 2]}>{h}</span>
