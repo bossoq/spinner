@@ -48,6 +48,7 @@
                   <div class="text-sm text-gray-500 dark:text-white">
                     <ul class="list-disc pl-4">
                       <li>Looks better on smaller screen</li>
+                      <li>Looks best on both light & dark mode</li>
                     </ul>
                   </div>
                 </div>
