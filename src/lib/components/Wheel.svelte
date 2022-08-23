@@ -74,14 +74,17 @@
 <div class="w-[36rem] aspect-square flex flex-col my-8 pb-10 justify-center items-center">
   <div
     class="w-[8rem] aspect-square bg-white hover:bg-gray-100 rounded-full z-10 absolute cursor-pointer select-none"
-    on:click={spin}
   >
     <div class="text-center text-4xl font-bold relative top-1/3">SPIN</div>
   </div>
   <div
     class="w-0 h-0 border-t-[2rem] border-t-transparent border-r-[4rem] border-r-white border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-8"
   />
-  <div class="{!isStart && 'animate-spin-slow'} w-[36rem] aspect-square absolute overflow-hidden">
+  <div
+    class="{!isStart &&
+      'animate-spin-slow'} w-[36rem] aspect-square absolute overflow-hidden cursor-pointer"
+    on:click={spin}
+  >
     {#each $entries as segment, idx}
       <div
         class="w-[36rem] aspect-square {colors[idx % 4]} rounded-full absolute"
