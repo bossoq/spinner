@@ -71,28 +71,37 @@
   }
 </script>
 
-<div class="w-[36rem] aspect-square flex flex-col my-8 pb-10 justify-center items-center">
+<div
+  class="w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] aspect-square flex flex-col my-8 pb-10 justify-center items-center"
+>
   <div
-    class="w-[8rem] aspect-square bg-white hover:bg-gray-100 rounded-full z-10 absolute cursor-pointer select-none"
+    class="w-[2rem] lg:w-[4rem] xl:w-[6rem] 2xl:w-[8rem] aspect-square bg-white hover:bg-gray-100 rounded-full z-10 absolute cursor-pointer select-none"
+    on:click={spin}
   >
-    <div class="text-center text-4xl font-bold relative top-1/3">SPIN</div>
+    <div
+      class="text-center invisible lg:visible lg:text-md xl:text-2xl 2xl:text-4xl font-bold relative top-1/3"
+    >
+      SPIN
+    </div>
   </div>
   <div
-    class="w-0 h-0 border-t-[2rem] border-t-transparent border-r-[4rem] border-r-white border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-8"
+    class="w-0 h-0 border-t-[1rem] xl:border-t-[2rem] border-t-transparent border-r-[2rem] xl:border-r-[4rem] border-r-white border-b-[1rem] xl:border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-4 xl:translate-x-8"
   />
   <div
     class="{!isStart &&
-      'animate-spin-slow'} w-[36rem] aspect-square absolute overflow-hidden cursor-pointer"
+      'animate-spin-slow'} w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] aspect-square absolute overflow-hidden cursor-pointer"
     on:click={spin}
   >
     {#each $entries as segment, idx}
       <div
-        class="w-[36rem] aspect-square {colors[idx % 4]} rounded-full absolute"
+        class="w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] aspect-square {colors[
+          idx % 4
+        ]} rounded-full absolute"
         style="clip-path: {clipPath}; transform: rotate({(360 / $entries.length) * idx +
           angleCurrent}deg)"
       >
         <span
-          class="w-[36rem] pr-6 aspect-square text-white text-4xl absolute overflow-hidden"
+          class="w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] pr-6 aspect-square text-white text-lg lg:text-xl xl:text-2xl 2xl:text-4xl absolute overflow-hidden"
           style="transform: rotate(-{textRotate}deg);"
         >
           <span class="w-full h-full flex justify-end items-center select-none">{segment}</span>
@@ -101,17 +110,20 @@
     {/each}
   </div>
   {#if isFinished}
-    <div class="w-1/3 min-w-fit p-4 z-20 bg-slate-800 absolute rounded-2xl" transition:fade>
-      <p class="text-4xl text-white font-bold py-4 text-center">
+    <div
+      class="w-1/3 min-w-fit p-4 z-20 bg-slate-800 absolute rounded-md lg:rounded-2xl"
+      transition:fade
+    >
+      <p class="text-lg lg:text-4xl text-white font-bold py-2 lg:py-4 text-center">
         The winner is {currentSegment}
       </p>
-      <p class="flex flex-row gap-4 justify-center py-4">
+      <p class="flex flex-row gap-4 justify-center py-2 lg:py-4">
         <button
-          class="w-fit p-4 mt-4 bg-cyan-500 hover:bg-cyan-700 text-xl text-white font-bold py-2 px-4 rounded-full"
+          class="w-fit p-2 lg:p-4 mt-2 lg:mt-4 bg-cyan-500 hover:bg-cyan-700 text-sm lg:text-xl text-white font-bold py-2 px-4 rounded-full"
           on:click={handleClose}>Close</button
         >
         <button
-          class="w-fit p-4 mt-4 bg-red-500 hover:bg-red-700 text-xl text-white font-bold py-2 px-4 rounded-full"
+          class="w-fit p-2 lg:p-4 mt-2 lg:mt-4 bg-red-500 hover:bg-red-700 text-sm lg:text-xl text-white font-bold py-2 px-4 rounded-full"
           on:click={handleRemove}>Remove</button
         >
       </p>
