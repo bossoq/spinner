@@ -13,7 +13,12 @@
   $: downTime = $entries.length * 1000
   $: currentSegment = ''
 
-  const colors = ['bg-red-300', 'bg-sky-300', 'bg-teal-300', 'bg-amber-300']
+  const colors = [
+    'bg-red-400 dark:bg-red-600',
+    'bg-sky-400 dark:bg-sky-600',
+    'bg-teal-400 dark:bg-teal-600',
+    'bg-amber-400 dark:bg-amber-600'
+  ]
 
   $: coordinateX = (Math.sin((2 / $entries.length) * Math.PI) / 2 + 0.5) * 100 // sin(deg) / 2 + 0.5
   $: coordinateY = (0.5 - Math.cos((2 / $entries.length) * Math.PI) / 2) * 100 // 0.5 - cos(deg) / 2
@@ -75,7 +80,7 @@
   class="w-[18rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem] 2xl:w-[48rem] aspect-square flex flex-col my-8 pb-10 justify-center items-center"
 >
   <div
-    class="w-[2rem] lg:w-[4rem] xl:w-[6rem] 2xl:w-[8rem] aspect-square bg-white hover:bg-gray-100 rounded-full z-10 absolute cursor-pointer select-none"
+    class="w-[2rem] lg:w-[4rem] xl:w-[6rem] 2xl:w-[8rem] aspect-square bg-slate-200 text-black dark:bg-slate-800 dark:text-white rounded-full z-10 absolute cursor-pointer select-none"
     on:click={spin}
   >
     <div
@@ -85,7 +90,7 @@
     </div>
   </div>
   <div
-    class="w-0 h-0 border-t-[1rem] xl:border-t-[2rem] border-t-transparent border-r-[2rem] xl:border-r-[4rem] border-r-white border-b-[1rem] xl:border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-4 xl:translate-x-8"
+    class="w-0 h-0 border-t-[1rem] xl:border-t-[2rem] border-t-transparent border-r-[2rem] xl:border-r-[4rem] border-r-white dark:border-r-black border-b-[1rem] xl:border-b-[2rem] border-b-transparent z-10 ml-auto self-end absolute translate-x-4 xl:translate-x-8"
   />
   <div
     class="{!isStart &&
