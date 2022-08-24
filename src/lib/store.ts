@@ -31,6 +31,7 @@ export const entries: Writable<string[]> = writable(
 export const names: Writable<string[]> = writable(
   storage.entries ? Object.keys(storage.entries) : ['default']
 )
+export const nameChange: Writable<string[]> = writable([])
 export const lastSelected: Writable<string> = writable(storage.lastSelected ?? 'default')
 export const winnerEntries: Writable<string[]> = writable([])
 
@@ -66,4 +67,11 @@ names.subscribe((value) => {
     }
     lastSelected.set(value[value.length - 1])
   }
+})
+nameChange.subscribe((value) => {
+  if (value.length === 0) return
+  storage.entries[value[1]] = storage.entries[value[0]]
+  delete storage.entries[value[0]]
+  names.set(Object.keys(storage.entries))
+  lastSelected.set(value[1])
 })

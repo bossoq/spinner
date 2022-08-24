@@ -1,9 +1,20 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { wheelModalViewed, entries, lastSelected, names, winnerEntries } from '$lib/store'
+  import {
+    wheelModalViewed,
+    entries,
+    lastSelected,
+    names,
+    nameChange,
+    winnerEntries
+  } from '$lib/store'
   import { clickOutside } from '$lib/clickOutside'
   import { handleWheelModalClass } from '$lib/handleModal'
 
+  $: isEdit = false
+  $: isValidName = true
+  $: isValidNameLength = true
+  let newName = ''
   let rawEntries = $entries.join('\n')
   let currentMenu = 'entries'
   const baseMenuClass = 'cursor-pointer inline-block p-2 rounded-t-lg '
@@ -31,6 +42,33 @@
   const handleAddList = () => {
     names.set([...$names, `Set ${$names.length + 1}`])
     handleListChange()
+  }
+  const handleEditList = () => {
+    newName = $lastSelected
+    isEdit = true
+  }
+  const checkName = () => {
+    if (newName.length === 0) {
+      isValidNameLength = false
+    } else {
+      isValidNameLength = true
+    }
+    if ($names.includes(newName) && newName !== $lastSelected) {
+      isValidName = false
+    } else {
+      isValidName = true
+    }
+  }
+  const handleSubmitEdit = () => {
+    if (!isValidNameLength || !isValidName) return
+    if (newName === $lastSelected) {
+      isEdit = false
+      newName = ''
+      return
+    }
+    nameChange.set([$lastSelected, newName])
+    isEdit = false
+    newName = ''
   }
   const handleDeleteList = () => {
     names.set($names.filter((e) => e !== $lastSelected))
@@ -93,28 +131,52 @@
             <div class="mt-2">
               {#if currentMenu === 'entries'}
                 <div class="flex flex-row gap-3 justify-center">
-                  <select
-                    class="flex-grow rounded-2xl text-center"
-                    bind:value={$lastSelected}
-                    on:change={handleListChange}
-                  >
-                    {#each $names as datasetName}
-                      <option value={datasetName}>{datasetName}</option>
-                    {/each}
-                  </select>
-                  <button
-                    class="w-fit bg-emerald-500 hover:bg-emerald-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
-                    on:click={handleAddList}>Add</button
-                  >
-                  <button
-                    class="w-fit bg-blue-500 hover:bg-blue-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
-                    >Edit</button
-                  >
-                  <button
-                    class="w-fit bg-red-500 hover:bg-red-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
-                    on:click={handleDeleteList}>Delete</button
-                  >
+                  {#if isEdit}
+                    <form class="flex flex-grow" on:submit|preventDefault={handleSubmitEdit}>
+                      <input
+                        class="flex-grow rounded-2xl px-2"
+                        bind:value={newName}
+                        on:input={checkName}
+                      />
+                    </form>
+                  {:else}
+                    <select
+                      class="flex-grow rounded-2xl text-center"
+                      bind:value={$lastSelected}
+                      on:change={handleListChange}
+                    >
+                      {#each $names as datasetName}
+                        <option value={datasetName}>{datasetName}</option>
+                      {/each}
+                    </select>
+                  {/if}
+                  {#if isEdit}
+                    <button
+                      class="w-fit bg-blue-500 hover:bg-blue-700 disabled:bg-gray-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                      disabled={!isValidNameLength || !isValidName}
+                      on:click={handleSubmitEdit}>Done</button
+                    >
+                  {:else}
+                    <button
+                      class="w-fit bg-emerald-500 hover:bg-emerald-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                      on:click={handleAddList}>Add</button
+                    >
+                    <button
+                      class="w-fit bg-blue-500 hover:bg-blue-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                      on:click={handleEditList}>Edit</button
+                    >
+                    <button
+                      class="w-fit bg-red-500 hover:bg-red-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                      on:click={handleDeleteList}>Delete</button
+                    >
+                  {/if}
                 </div>
+                {#if isEdit && (!isValidNameLength || !isValidName)}
+                  <p class="bg-red-300 text-red-800 text-center px-1 py-1 my-2 rounded-lg">
+                    {!isValidNameLength ? 'List name should be at least 1 character long' : ''}
+                    {!isValidName ? 'List name already exists' : ''}
+                  </p>
+                {/if}
                 <textarea
                   cols="30"
                   rows="10"
