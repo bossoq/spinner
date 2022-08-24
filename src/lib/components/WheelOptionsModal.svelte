@@ -4,7 +4,7 @@
   import { clickOutside } from '$lib/clickOutside'
   import { handleWheelModalClass } from '$lib/handleModal'
 
-  $: rawEntries = $entries.join('\n')
+  let rawEntries = $entries.join('\n')
   let currentMenu = 'entries'
   const baseMenuClass = 'cursor-pointer inline-block p-2 rounded-t-lg '
   const activeMenuClass =
@@ -24,6 +24,9 @@
   }
   const handleClearWinner = () => {
     winnerEntries.set([])
+  }
+  const handleListChange = () => {
+    rawEntries = $entries.join('\n')
   }
 </script>
 
@@ -82,14 +85,18 @@
             <div class="mt-2">
               {#if currentMenu === 'entries'}
                 <div class="flex flex-row gap-3 justify-center">
-                  <select class="flex-grow rounded-2xl text-center" bind:value={$lastSelected}>
+                  <select
+                    class="flex-grow rounded-2xl text-center"
+                    bind:value={$lastSelected}
+                    on:change={handleListChange}
+                  >
                     {#each $names as datasetName}
                       <option value={datasetName}>{datasetName}</option>
                     {/each}
                   </select>
                   <button
                     class="w-fit bg-emerald-500 hover:bg-emerald-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
-                    >Add</button
+                    on:click={handleAddList}>Add</button
                   >
                   <button
                     class="w-fit bg-blue-500 hover:bg-blue-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"

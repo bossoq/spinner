@@ -45,6 +45,6 @@ entries.subscribe((value) => {
 })
 lastSelected.subscribe((value) => {
   storage.lastSelected = value
-  entries.set(storage.entries ? storage.entries[value] : defaultEntries)
+  entries.set(storage.entries ? storage.entries[value] ?? [] : defaultEntries)
   storeSettings()
 })
