@@ -48,3 +48,22 @@ lastSelected.subscribe((value) => {
   entries.set(storage.entries ? storage.entries[value] ?? [] : defaultEntries)
   storeSettings()
 })
+names.subscribe((value) => {
+  if (value.length > Object.keys(storage.entries).length ?? 0) {
+    lastSelected.set(value[value.length - 1])
+  } else if (value.length < Object.keys(storage.entries).length ?? 0) {
+    storage.entries = Object.keys(storage.entries)
+      .filter((key) => value.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = storage.entries[key]
+        return obj
+      }, {})
+    if (value.length === 0) {
+      storage.entries = { default: defaultEntries }
+      lastSelected.set('default')
+      names.set(['default'])
+      return
+    }
+    lastSelected.set(value[value.length - 1])
+  }
+})

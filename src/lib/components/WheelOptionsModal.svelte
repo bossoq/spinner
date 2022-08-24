@@ -29,9 +29,12 @@
     rawEntries = $entries.join('\n')
   }
   const handleAddList = () => {
-    const newListName = `Set ${$names.length + 1}`
-    names.set([...$names, newListName])
-    lastSelected.set(newListName)
+    names.set([...$names, `Set ${$names.length + 1}`])
+    handleListChange()
+  }
+  const handleDeleteList = () => {
+    names.set($names.filter((e) => e !== $lastSelected))
+    handleListChange()
   }
 </script>
 
@@ -109,7 +112,7 @@
                   >
                   <button
                     class="w-fit bg-red-500 hover:bg-red-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
-                    >Delete</button
+                    on:click={handleDeleteList}>Delete</button
                   >
                 </div>
                 <textarea
