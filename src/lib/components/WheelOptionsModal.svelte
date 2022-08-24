@@ -1,10 +1,10 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { wheelModalViewed, entries, winnerEntries } from '$lib/store'
+  import { wheelModalViewed, entries, lastSelected, names, winnerEntries } from '$lib/store'
   import { clickOutside } from '$lib/clickOutside'
   import { handleWheelModalClass } from '$lib/handleModal'
 
-  let rawEntries = $entries.join('\n')
+  $: rawEntries = $entries.join('\n')
   let currentMenu = 'entries'
   const baseMenuClass = 'cursor-pointer inline-block p-2 rounded-t-lg '
   const activeMenuClass =
@@ -81,6 +81,25 @@
             <hr />
             <div class="mt-2">
               {#if currentMenu === 'entries'}
+                <div class="flex flex-row gap-3 justify-center">
+                  <select class="flex-grow rounded-2xl text-center" bind:value={$lastSelected}>
+                    {#each $names as datasetName}
+                      <option value={datasetName}>{datasetName}</option>
+                    {/each}
+                  </select>
+                  <button
+                    class="w-fit bg-emerald-500 hover:bg-emerald-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                    >Add</button
+                  >
+                  <button
+                    class="w-fit bg-blue-500 hover:bg-blue-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                    >Edit</button
+                  >
+                  <button
+                    class="w-fit bg-red-500 hover:bg-red-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                    >Delete</button
+                  >
+                </div>
                 <textarea
                   cols="30"
                   rows="10"
@@ -91,19 +110,19 @@
                 />
               {/if}
               {#if currentMenu === 'results'}
+                <button
+                  class="w-fit bg-red-500 hover:bg-red-700 text-sm sm:text-base text-white font-medium py-2 px-4 mb-2 rounded-full"
+                  on:click={handleClearWinner}>Clear the list</button
+                >
                 <textarea
                   cols="30"
-                  rows="8"
+                  rows="10"
                   class="w-full border-2 disabled:bg-white disabled:dark:bg-black disabled:dark:text-white border-gray-200 dark:border-gray-800 rounded-lg p-2"
                   placeholder="Winner history shows here"
                   value={$winnerEntries.join('\n')}
                   on:input={handleEntries}
                   disabled
                 />
-                <button
-                  class="w-fit bg-red-500 hover:bg-red-700 text-sm sm:text-base text-white font-medium py-2 px-4 rounded-full"
-                  on:click={handleClearWinner}>Clear the list</button
-                >
               {/if}
             </div>
           </div>
