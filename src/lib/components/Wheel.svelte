@@ -7,7 +7,7 @@
   let angleDelta = 0
   $: isStart = false
   $: isFinished = false
-  $: maxSpeed = $entries.length / 2
+  $: maxSpeed = ($entries.length * 9) / (Math.random() * 10 + 20)
   $: timerDelay = $entries.length
   $: upTime = Math.min($entries.length * 100, 10 * 100)
   $: downTime = Math.min($entries.length * 1000, 10 * 1000)
@@ -35,6 +35,7 @@
     isStart = true
     isFinished = false
     spinStart = new Date().getTime()
+    angleCurrent = Math.random() * 360
     timerHandle = setInterval(onTimerTick, timerDelay)
   }
   const onTimerTick = () => {
@@ -68,6 +69,7 @@
       clearInterval(timerHandle)
       timerHandle = null
     }
+    angleCurrent = 0
   }
   const handleRemove = () => {
     entries.set($entries.filter((_, index) => index !== $entries.indexOf(currentSegment)))
