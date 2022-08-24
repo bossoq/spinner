@@ -28,6 +28,11 @@
   const handleListChange = () => {
     rawEntries = $entries.join('\n')
   }
+  const handleAddList = () => {
+    const newListName = `Set ${$names.length + 1}`
+    names.set([...$names, newListName])
+    lastSelected.set(newListName)
+  }
 </script>
 
 <div
